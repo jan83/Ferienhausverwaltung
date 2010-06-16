@@ -12,6 +12,7 @@ import javax.swing.*;
 public class KundenIFrame extends javax.swing.JInternalFrame {
     private startGUI einAufrufer;
     private LinkedList aenderungen = new LinkedList();
+    private final String DEFAULT_TEXTFELD = "<Alle Kunden>";
             
     /** Creates new form kundenIFrame */
     public KundenIFrame() {
@@ -49,6 +50,8 @@ public class KundenIFrame extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         kundenTBL = new javax.swing.JTable();
 
+        setBegriff(DEFAULT_TEXTFELD);
+        suchen();
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2));
         setIconifiable(true);
         setMaximizable(true);
@@ -255,7 +258,7 @@ public class KundenIFrame extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_buchungenBTNActionPerformed
 
     private void suchenBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_suchenBTNActionPerformed
-        suchen();
+        +();
     }//GEN-LAST:event_suchenBTNActionPerformed
 
     
@@ -283,16 +286,19 @@ public class KundenIFrame extends javax.swing.JInternalFrame {
     {
         KundenVerwaltung eineVerwaltung = new KundenVerwaltung();
         LinkedList eineListe = null;
-       
-        if(gruppeComboBox.getSelectedIndex()==0)
+        if (begriffText.getText().equals(DEFAULT_TEXTFELD))
         {
-            eineListe = eineVerwaltung.SuchenKnr(Integer.parseInt(begriffText.getText()));
+            eineListe = eineVerwaltung.SuchenAlle();
+        } else {
+            if(gruppeComboBox.getSelectedIndex()==0) 
+            {
+                eineListe = eineVerwaltung.SuchenKnr(Integer.parseInt(begriffText.getText()));
+            }
+            if(gruppeComboBox.getSelectedIndex()==1)
+            {
+                eineListe = eineVerwaltung.SuchenName(begriffText.getText());
+            }
         }
-        if(gruppeComboBox.getSelectedIndex()==1)
-        {
-            eineListe = eineVerwaltung.SuchenName(begriffText.getText());
-        }
-
         ListIterator einIterator = eineListe.listIterator();
         int i=0;
         
